@@ -27,8 +27,6 @@ ISP=$(wget -qO- ipinfo.io/org)
 CITY=$(curl -s ipinfo.io/city)
 TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
-KEY="2145515560:AAE9WqfxZzQC-FYF1VUprICGNomVfv6OdTU"
-URL="https://api.telegram.org/bot$KEY/sendMessage"
 REPO="https://raw.githubusercontent.com/manssizz/scriptvps/master/"
 APT="apt-get -y install "
 domain=$(cat /root/domain)
@@ -449,20 +447,6 @@ function install_all() {
 }
 
 function finish(){
-    TEXT="
-<u>INFORMATION VPS INSTALL SC</u>
-<code>TIME      : </code><code>${TIME}</code>
-<code>IPVPS     : </code><code>${MYIP}</code>
-<code>DOMAIN    : </code><code>${domain}</code>
-<code>ISP       : </code><code>${ISP}</code>
-<code>LOKASI    : </code><code>${CITY}</code>
-<code>USER      : </code><code>${NAMES}</code>
-<code>RAM       : </code><code>${RAMMS}MB</code>
-<code>LINUX     : </code><code>${OS}</code>
-"
-    curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
-    cp /etc/openvpn/*.ovpn /var/www/html/
-    # sed -i "s/xxx/${domain}/g" /var/www/html/index.html
     sed -i "s/xxx/${domain}/g" /etc/haproxy/haproxy.cfg
     sed -i "s/xxx/${MYIP}/g" /etc/squid/squid.conf
     chown -R www-data:www-data /etc/msmtprc
